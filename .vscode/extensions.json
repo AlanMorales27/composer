@@ -2,6 +2,7 @@
     "recommendations": [
         "enkia.tokyo-night",
         "stivo.tailwind-fold",
-        "yusifaliyevpro.vscicons"
+        "yusifaliyevpro.vscicons",
+        "bradlc.vscode-tailwindcss"
     ]
 }

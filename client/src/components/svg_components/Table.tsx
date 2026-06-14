@@ -36,17 +36,22 @@ function setChairs(capacity: number): React.ReactNode{
 }
 
 export default function Table(props: Table){
+
+    const handleClick = () => {
+        console.log(`Table ${props.id} clicked!`);
+    }
+
     return(
         <g transform={`translate(${props.x}, ${props.y})`}>
             { setChairs(props.capacity) }
-            <rect
+            <rect className="cursor-pointer fill-gray-400 hover:fill-gray-500"
                 x = {0}
                 y = {0}
                 width={(props.capacity * 10) - 10}
                 height={50}
-                fill="lightgray"
-                stroke="black"
+                onClick={handleClick}
             />
         </g>
     )
 }
+    

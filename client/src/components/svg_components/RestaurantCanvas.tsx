@@ -19,17 +19,21 @@ export default function RestaurantCanvas(){
             x: 100,
             y: 200,
             capacity: 8
+        },
+        {
+            id: 2,
+            x: 100,
+            y: 300,
+            capacity: 14
         }
     ]);
 
     return (
-        <svg className="bg-gray-100"
+        <svg className="bg-[#2D323E]"
             width="800"
             height="600"
         >
             {tables.map(table => ( <Table {...table}/> ))}
-    
-            
         </svg>
     )
 }
