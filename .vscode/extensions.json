@@ -3,6 +3,7 @@
         "enkia.tokyo-night",
         "stivo.tailwind-fold",
         "yusifaliyevpro.vscicons",
-        "bradlc.vscode-tailwindcss"
+        "bradlc.vscode-tailwindcss",
+        "ms-dotnettools.csdevkit"
     ]
 }
