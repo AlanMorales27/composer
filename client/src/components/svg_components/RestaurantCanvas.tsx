@@ -13,6 +13,12 @@ export default function RestaurantCanvas(){
             x: 100,
             y: 100,
             capacity: 4
+        },
+        {
+            id: 2,
+            x: 100,
+            y: 200,
+            capacity: 8
         }
     ]);
 
