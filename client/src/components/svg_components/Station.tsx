@@ -35,10 +35,10 @@ function setChairs(capacity: number): React.ReactNode{
     return chairs;
 }
 
-export default function Table(props: Table){
+export default function Stations(props: Station){
 
     const handleClick = () => {
-        console.log(`Table ${props.id} clicked!`);
+        console.log(`Station ${props.id} clicked!`);
     }
 
     return(

@@ -3,11 +3,11 @@
  */
 
 import { useState } from "react";
-import Table from "./Table";
+import Stations from "./Station";
 
 export default function RestaurantCanvas(){
 
-    const [tables, setTables] = useState<Table[]>([
+    const [stations, setStations] = useState<Station[]>([
         {
             id: 1,
             x: 100,
@@ -33,7 +33,7 @@ export default function RestaurantCanvas(){
             width="800"
             height="600"
         >
-            {tables.map(table => ( <Table {...table}/> ))}
+            {stations.map(station => ( <Stations {...station}/> ))}
         </svg>
     )
 }
