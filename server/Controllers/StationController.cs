@@ -1,5 +1,9 @@
-
 using Microsoft.AspNetCore.Mvc;
+
+/**
+* Use the following url for run the apis in local development 
+*    => https://localhost:5001/api/stations
+*/
 
 [ApiController]
 [Route("api/stations")]
