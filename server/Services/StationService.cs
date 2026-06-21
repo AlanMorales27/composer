@@ -27,7 +27,7 @@ public class StationService
     public async Task<Station> CreateStationAsync(CreateStationDto station)
     {
         Station newStation = new Station {
-            Number = station.Number,
+            number = station.number,
             x = station.x,
             y = station.y,
             capacity = station.capacity
@@ -44,7 +44,7 @@ public class StationService
     {
         Station? existingStation = await this.GetStationAsync(id);
         
-        existingStation.Number = station.Number;
+        existingStation.number = station.number;
         existingStation.x = station.x;
         existingStation.y = station.y;
         existingStation.capacity = station.capacity;

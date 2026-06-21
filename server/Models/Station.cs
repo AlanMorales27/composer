@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 public class Station
 {
     public int Id { get; set; }
-    public int Number { get; set; }
+    public int number { get; set; }
     [Required]
     public int x {get; set;}
     [Required]

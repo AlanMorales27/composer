@@ -5,7 +5,7 @@
     
 public class CreateStationDto
 {
-    public int Number { get; set; }
+    public int number { get; set; }
     public int x {get; set;}
     public int y {get; set;}
     public int capacity {get; set;}
