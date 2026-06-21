@@ -29,13 +29,15 @@ public class StationController: ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Station>> CreateStation([FromBody] CreateStationDto station)
+    public async Task<ActionResult<Station>> CreateStation(
+        [FromBody] CreateStationDto station
+    )
     {
         Station created = await _service.CreateStationAsync(station);
 
         return CreatedAtAction(
             nameof(GetStation),
-            new { id = created.Id },
+            new { id = created.id },
             created
         );
     }

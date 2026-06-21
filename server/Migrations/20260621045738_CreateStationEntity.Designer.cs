@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace server.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260616041022_CreateStationEntity")]
+    [Migration("20260621045738_CreateStationEntity")]
     partial class CreateStationEntity
     {
         /// <inheritdoc />
@@ -25,16 +25,16 @@ namespace server.Migrations
 
             modelBuilder.Entity("Station", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Number")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
                     b.Property<int>("capacity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("number")
                         .HasColumnType("int");
 
                     b.Property<int>("x")
@@ -43,7 +43,7 @@ namespace server.Migrations
                     b.Property<int>("y")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("id");
 
                     b.ToTable("Stations");
                 });

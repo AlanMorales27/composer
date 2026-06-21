@@ -14,16 +14,16 @@ namespace server.Migrations
                 name: "Stations",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Number = table.Column<int>(type: "int", nullable: false),
+                    number = table.Column<int>(type: "int", nullable: false),
                     x = table.Column<int>(type: "int", nullable: false),
                     y = table.Column<int>(type: "int", nullable: false),
                     capacity = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Stations", x => x.Id);
+                    table.PrimaryKey("PK_Stations", x => x.id);
                 });
         }
 
