@@ -1,5 +1,5 @@
 
-interface Table {
+interface Station {
     id: number;
     number?: number;
     x: number;
