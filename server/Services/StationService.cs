@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using server.DTOs;
 
 public class StationService
 {
@@ -23,10 +24,10 @@ public class StationService
     public async Task<Station> CreateStationAsync(CreateStationDto station)
     {
         Station newStation = new Station {
-            number = station.number,
-            x = station.x,
-            y = station.y,
-            capacity = station.capacity
+            Number = station.Number,
+            X = station.X,
+            Y = station.Y,
+            Capacity = station.Capacity
         };
 
         _context.Stations.Add(newStation);
@@ -42,10 +43,10 @@ public class StationService
 
         if(existingStation is null) return null;
         
-        existingStation.number = station.number;
-        existingStation.x = station.x;
-        existingStation.y = station.y;
-        existingStation.capacity = station.capacity;
+        existingStation.Number = station.Number;
+        existingStation.X = station.X;
+        existingStation.Y = station.Y;
+        existingStation.Capacity = station.Capacity;
 
         await _context.SaveChangesAsync();
 

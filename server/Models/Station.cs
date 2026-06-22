@@ -2,12 +2,12 @@ using System.ComponentModel.DataAnnotations;
 
 public class Station
 {
-    public int id { get; set; }
-    public int number { get; set; }
+    public int Id { get; set; }
+    public int Number { get; set; }
     [Required]
-    public int x {get; set;}
+    public int X {get; set;}
     [Required]
-    public int y {get; set;}
+    public int Y {get; set;}
     [Required]
-    public int capacity {get; set;}
+    public int Capacity {get; set;}
 }

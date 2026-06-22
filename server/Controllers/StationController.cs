@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using server.DTOs;
 
 /**
 * Use the following url for run the apis in local development 
@@ -43,7 +44,7 @@ public class StationController: ControllerBase
 
         return CreatedAtAction(
             nameof(GetStation),
-            new { id = created.id },
+            new { id = created.Id },
             created
         );
     }
