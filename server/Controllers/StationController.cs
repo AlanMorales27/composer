@@ -27,7 +27,9 @@ public class StationController: ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<Station>> GetStation(int id)
     {
-        Station station = await _service.GetStationAsync(id);
+        Station? station = await _service.GetStationAsync(id);
+
+        if(station is null) return NotFound();
 
         return Ok(station);
     }
@@ -61,6 +63,6 @@ public class StationController: ControllerBase
     {
         await _service.DeleteStationAsync(id);
         
-        return Ok();
+        return NoContent();
     }
 }

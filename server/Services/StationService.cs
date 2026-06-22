@@ -15,13 +15,9 @@ public class StationService
         return await _context.Stations.ToListAsync();
     }
 
-    public async Task<Station> GetStationAsync(int id)
+    public async Task<Station?> GetStationAsync(int id)
     {
-        Station? station = await _context.Stations.FindAsync(id);
-
-        if(station is null) throw new Exception("Station not found");
-
-        return station;
+        return await _context.Stations.FindAsync(id);
     }
 
     public async Task<Station> CreateStationAsync(CreateStationDto station)
@@ -43,6 +39,8 @@ public class StationService
     public async Task<Station?> UpdateStationAsync(int id, CreateStationDto station)
     {
         Station? existingStation = await this.GetStationAsync(id);
+
+        if(existingStation is null) return null;
         
         existingStation.number = station.number;
         existingStation.x = station.x;
@@ -57,6 +55,8 @@ public class StationService
     public async Task<bool> DeleteStationAsync(int id)
     {
         Station? station = await this.GetStationAsync(id);
+
+        if(station is null) return false;
 
         _context.Stations.Remove(station);
         await _context.SaveChangesAsync();
