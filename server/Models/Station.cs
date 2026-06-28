@@ -2,7 +2,11 @@ using System.ComponentModel.DataAnnotations;
 
 public class Station
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
+
+    public Guid RestaurantId {get; set;}
+
+    public Restaurant Restaurant {get; set;} = null!;
     
     [Required]
     [Range(1, int.MaxValue)]

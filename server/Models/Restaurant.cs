@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 public class Restaurant
 {
-    public int Id {get; set;}
+    public Guid Id {get; set;}
 
     [Required]
     [StringLength(100, MinimumLength = 3)]
@@ -17,4 +17,8 @@ public class Restaurant
     public string? Phone {get;set;} = string.Empty;
 
     public DateTime CreateAt {get; set;} = DateTime.UtcNow;
+
+    public ICollection<Station> Stations = new List<Station>();
+
+    public ICollection<User> Users = new List<User>();
 }   
