@@ -13,6 +13,7 @@ public class User
 {
     public Guid Id {get; set;}
 
+    [Required]
     public Guid RestaurantId {get; set;}
 
     public Restaurant Restaurant {get; set;} = null!;  
