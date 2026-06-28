@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace server.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260628043746_CreateRestaurantEntity")]
+    [Migration("20260628060155_CreateRestaurantEntity")]
     partial class CreateRestaurantEntity
     {
         /// <inheritdoc />
@@ -34,6 +34,7 @@ namespace server.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")

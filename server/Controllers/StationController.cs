@@ -10,7 +10,7 @@ using server.DTOs;
 [Route("api/stations")]
 public class StationController: ControllerBase
 {
-    public readonly StationService _service;
+    private readonly StationService _service;
 
     public StationController(StationService service)
     {
