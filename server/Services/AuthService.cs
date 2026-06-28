@@ -17,26 +17,9 @@ public class AuthService
 
     public async Task RegisterAsync(RegisterDto data)
     {
-        if (data is null)
-        {
-            throw new ArgumentNullException(nameof(data));
-        }
-
-        if (string.IsNullOrWhiteSpace(data.Name))
-        {
-            throw new ArgumentException(
-                "Name is required.", 
-                nameof(data.Name)
-            );
-        }
-
-        if (string.IsNullOrWhiteSpace(data.Password))
-        {
-            throw new ArgumentException(
-                "Password is required.", 
-                nameof(data.Password)
-            );
-        }
+        ArgumentNullException.ThrowIfNull(data);
+        ArgumentException.ThrowIfNullOrWhiteSpace(data.Name, nameof(data.Name));
+        ArgumentException.ThrowIfNullOrWhiteSpace(data.Password, nameof(data.Password));
         
         bool emailExist = await _context.Restaurants.AnyAsync( 
             r => r.Email == data.Email
@@ -69,26 +52,9 @@ public class AuthService
 
     public async Task LoginAsync( LoginDto data )
     {
-        if(data is null)
-        {
-            throw new ArgumentNullException(nameof(data));
-        }
-
-        if (string.IsNullOrWhiteSpace(data.Email))
-        {
-            throw new ArgumentException(
-                "Email is required.", 
-                nameof(data.Email)
-            );
-        }
-
-        if (string.IsNullOrWhiteSpace(data.Password))
-        {
-            throw new ArgumentException(
-                "Password is required.", 
-                nameof(data.Password)
-            );
-        }
+        ArgumentNullException.ThrowIfNull(data);
+        ArgumentException.ThrowIfNullOrWhiteSpace(data.Email, nameof(data.Email));
+        ArgumentException.ThrowIfNullOrWhiteSpace(data.Password, nameof(data.Password));
 
         Restaurant? register = await _context.Restaurants.FirstOrDefaultAsync(
             reg => reg.Email == data.Email
