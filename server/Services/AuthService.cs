@@ -1,4 +1,5 @@
 using System.Security.Authentication;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Server.DTOs;
 
@@ -6,9 +7,12 @@ public class AuthService
 {
     private readonly AppDbContext _context;
 
-    public AuthService(AppDbContext context)
+    private readonly IPasswordHasher<Restaurant> _hasher;
+
+    public AuthService(AppDbContext context, IPasswordHasher<Restaurant> hasher)
     {
         _context = context;
+        _hasher = hasher;
     }
 
     public async Task RegisterAsync(RegisterDto data)
@@ -44,10 +48,13 @@ public class AuthService
         {
             Name = data.Name.Trim(),
             Email = data.Email.Trim(),
-            Password = data.Password,
+            Password = "",
             Phone = data.Phone?.Trim(),
         };
-
+        
+        // Hashing password
+        newRegister.Password = _hasher.HashPassword(newRegister, data.Password);
+        
         try
         {
             _context.Restaurants.Add(newRegister);
