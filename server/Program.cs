@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Server.Middleware;
 
@@ -7,6 +8,12 @@ builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 builder.Services.AddScoped<StationService>();
 builder.Services.AddScoped<AuthService>();
+
+// This could be change by BCryptPasswordHashear implementing the same interface 
+builder.Services.AddScoped<
+    IPasswordHasher<Restaurant>, 
+    PasswordHasher<Restaurant>
+>();
 
 builder.Services.AddDbContext<AppDbContext>(
     options => options

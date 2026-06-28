@@ -1,4 +1,5 @@
 using System.Security.Authentication;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Server.DTOs;
 
@@ -6,33 +7,19 @@ public class AuthService
 {
     private readonly AppDbContext _context;
 
-    public AuthService(AppDbContext context)
+    private readonly IPasswordHasher<Restaurant> _hasher;
+
+    public AuthService(AppDbContext context, IPasswordHasher<Restaurant> hasher)
     {
         _context = context;
+        _hasher = hasher;
     }
 
     public async Task RegisterAsync(RegisterDto data)
     {
-        if (data is null)
-        {
-            throw new ArgumentNullException(nameof(data));
-        }
-
-        if (string.IsNullOrWhiteSpace(data.Name))
-        {
-            throw new ArgumentException(
-                "Name is required.", 
-                nameof(data.Name)
-            );
-        }
-
-        if (string.IsNullOrWhiteSpace(data.Password))
-        {
-            throw new ArgumentException(
-                "Password is required.", 
-                nameof(data.Password)
-            );
-        }
+        ArgumentNullException.ThrowIfNull(data);
+        ArgumentException.ThrowIfNullOrWhiteSpace(data.Name, nameof(data.Name));
+        ArgumentException.ThrowIfNullOrWhiteSpace(data.Password, nameof(data.Password));
         
         bool emailExist = await _context.Restaurants.AnyAsync( 
             r => r.Email == data.Email
@@ -44,9 +31,12 @@ public class AuthService
         {
             Name = data.Name.Trim(),
             Email = data.Email.Trim(),
-            Password = data.Password,
+            Password = "",
             Phone = data.Phone?.Trim(),
         };
+        
+        // Hashing password
+        newRegister.Password = _hasher.HashPassword(newRegister, data.Password);
 
         try
         {
@@ -62,35 +52,24 @@ public class AuthService
 
     public async Task LoginAsync( LoginDto data )
     {
-        if(data is null)
-        {
-            throw new ArgumentNullException(nameof(data));
-        }
-
-        if (string.IsNullOrWhiteSpace(data.Email))
-        {
-            throw new ArgumentException(
-                "Email is required.", 
-                nameof(data.Email)
-            );
-        }
-
-        if (string.IsNullOrWhiteSpace(data.Password))
-        {
-            throw new ArgumentException(
-                "Password is required.", 
-                nameof(data.Password)
-            );
-        }
+        ArgumentNullException.ThrowIfNull(data);
+        ArgumentException.ThrowIfNullOrWhiteSpace(data.Email, nameof(data.Email));
+        ArgumentException.ThrowIfNullOrWhiteSpace(data.Password, nameof(data.Password));
 
         Restaurant? register = await _context.Restaurants.FirstOrDefaultAsync(
             reg => reg.Email == data.Email
         );
 
-        if(register is null || register.Password != data.Password)
+        if(register is null)
         {
             throw new AuthenticationException("Invalid credentials");
         }
 
+        var result = _hasher.VerifyHashedPassword(register, register.Password, data.Password);
+
+        if (result == PasswordVerificationResult.Failed)
+        {
+            throw new AuthenticationException("Invalid credentials");
+        }
     }
 }
