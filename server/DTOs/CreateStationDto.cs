@@ -2,7 +2,7 @@
 * This file defines the transfer object for creating or editing a station. 
 * It contains the properties that are required to create or edit a station.
 */
-namespace server.DTOs;
+namespace Server.DTOs;
 public class CreateStationDto
 {
     public int Number { get; set; }

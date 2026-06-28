@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using server.DTOs;
+using Server.DTOs;
 
 /**
 * Use the following url for run the apis in local development 
@@ -10,7 +10,7 @@ using server.DTOs;
 [Route("api/stations")]
 public class StationController: ControllerBase
 {
-    public readonly StationService _service;
+    private readonly StationService _service;
 
     public StationController(StationService service)
     {
@@ -26,7 +26,7 @@ public class StationController: ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Station>> GetStation(int id)
+    public async Task<ActionResult<Station>> GetStation(Guid id)
     {
         Station? station = await _service.GetStationAsync(id);
 
@@ -50,7 +50,7 @@ public class StationController: ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult<Station>> UpdateStation(int id, [FromBody] CreateStationDto station)
+    public async Task<ActionResult<Station>> UpdateStation(Guid id, [FromBody] CreateStationDto station)
     {
         Station? updated = await _service.UpdateStationAsync(id, station);
 
@@ -60,7 +60,7 @@ public class StationController: ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult> DeleteStation(int id)
+    public async Task<ActionResult> DeleteStation(Guid id)
     {
         await _service.DeleteStationAsync(id);
         
