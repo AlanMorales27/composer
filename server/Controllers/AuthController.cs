@@ -15,7 +15,7 @@ public class AuthController : ControllerBase
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterDto data)
     {
-        if (!ModelState.IsValid) ValidationProblem(ModelState);
+        if (!ModelState.IsValid) return ValidationProblem(ModelState);
 
         await _service.RegisterAsync(data);
 

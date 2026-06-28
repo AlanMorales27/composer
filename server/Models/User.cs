@@ -25,5 +25,5 @@ public class User
     [Required]
     public Roles Rol {get; set;} = Roles.WAITER;
 
-    public DateTime CreateAt = DateTime.UtcNow;
+    public DateTime CreateAt {get;} = DateTime.UtcNow;
 } 

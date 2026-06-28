@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using server.DTOs;
+using Server.DTOs;
 
 public class StationService
 {
@@ -16,7 +16,7 @@ public class StationService
         return await _context.Stations.ToListAsync();
     }
 
-    public async Task<Station?> GetStationAsync(int id)
+    public async Task<Station?> GetStationAsync(Guid id)
     {
         return await _context.Stations.FindAsync(id);
     }
@@ -37,7 +37,7 @@ public class StationService
         return newStation;
     }
 
-    public async Task<Station?> UpdateStationAsync(int id, CreateStationDto station)
+    public async Task<Station?> UpdateStationAsync(Guid id, CreateStationDto station)
     {
         Station? existingStation = await this.GetStationAsync(id);
 
@@ -53,7 +53,7 @@ public class StationService
         return existingStation;
     }
 
-    public async Task<bool> DeleteStationAsync(int id)
+    public async Task<bool> DeleteStationAsync(Guid id)
     {
         Station? station = await this.GetStationAsync(id);
 

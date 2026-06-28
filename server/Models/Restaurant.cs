@@ -19,7 +19,7 @@ public class Restaurant
 
     public DateTime CreateAt {get; set;} = DateTime.UtcNow;
 
-    public ICollection<Station> Stations = new List<Station>();
+    public ICollection<Station> Stations {get;} = new List<Station>();
 
-    public ICollection<User> Users = new List<User>();
+    public ICollection<User> Users {get;} = new List<User>();
 }   
