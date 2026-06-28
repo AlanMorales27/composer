@@ -54,7 +54,7 @@ public class AuthService
         
         // Hashing password
         newRegister.Password = _hasher.HashPassword(newRegister, data.Password);
-        
+
         try
         {
             _context.Restaurants.Add(newRegister);
@@ -94,10 +94,16 @@ public class AuthService
             reg => reg.Email == data.Email
         );
 
-        if(register is null || register.Password != data.Password)
+        if(register is null)
         {
             throw new AuthenticationException("Invalid credentials");
         }
 
+        var result = _hasher.VerifyHashedPassword(register, register.Password, data.Password);
+
+        if (result == PasswordVerificationResult.Failed)
+        {
+            throw new AuthenticationException("Invalid credentials");
+        }
     }
 }
