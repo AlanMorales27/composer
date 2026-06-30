@@ -23,12 +23,12 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] LoginDto data)
+    public async Task<ActionResult<string>> Login([FromBody] LoginTerminalDto data)
     {
         if (!ModelState.IsValid) return ValidationProblem(ModelState);
 
-        await _service.LoginAsync(data);
+        string token = await _service.LoginTerminalAsync(data);
 
-        return Ok(new { message = "Login completed successfully." });
+        return Ok(token);
     }
 }

@@ -6,8 +6,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
 builder.Services.AddControllers();
+
 builder.Services.AddScoped<StationService>();
 builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<TerminalJwtService>();
+builder.Services.AddScoped<UserJwtService>();
 
 // This could be change by BCryptPasswordHashear implementing the same interface 
 builder.Services.AddScoped<
@@ -18,7 +21,6 @@ builder.Services.AddScoped<
 builder.Services.AddDbContext<AppDbContext>(
     options => options
         .UseSqlServer( builder.Configuration.GetConnectionString("DefaultConnection"))
-        .LogTo(Console.WriteLine, LogLevel.Information)
 );
 
 var app = builder.Build();

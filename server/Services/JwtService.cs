@@ -1,5 +1,12 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.IdentityModel.Tokens;
+
 public record GenerateTokenRequest
 {
+    public required Guid Id { get; init; }
     public required string Name { get; init; }
     public string? Email { get; init; }
     public string? Role { get; init; }
@@ -21,7 +28,24 @@ public class TerminalJwtService : IJwtService
 
     public string generateToken(GenerateTokenRequest request)
     {
-        return "";
+        List<Claim> claims = JwtClaims.GetDefault(request.Id);
+        claims.AddRange(
+            new List<Claim> { new Claim("terminal", request.Name) }
+        );
+
+        var key = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(_configuration["JWT:Key"]!)
+        );
+
+        var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+        var token = new JwtSecurityToken(
+            signingCredentials: credentials,
+            expires: DateTime.UtcNow.AddDays(1),
+            claims: claims
+        );
+
+        return new JwtSecurityTokenHandler().WriteToken(token);
     }
 }
 
@@ -37,5 +61,21 @@ public class UserJwtService : IJwtService
     public string generateToken(GenerateTokenRequest request)
     {
         return "";
+    }
+}
+
+public static class JwtClaims
+{
+    public static List<Claim> GetDefault(Guid Id)
+    {
+        return new List<Claim>
+        {
+            new Claim(JwtRegisteredClaimNames.Sub, Id.ToString()),
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            new Claim(JwtRegisteredClaimNames.Exp, 
+                DateTimeOffset.UtcNow.AddDays(1).ToUnixTimeSeconds().ToString()),
+            new Claim(JwtRegisteredClaimNames.Iat, 
+                DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString())
+        };
     }
 }

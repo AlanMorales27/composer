@@ -117,13 +117,13 @@ public class AuthServiceTest
 
         await service.RegisterAsync(registerDto);
 
-        var loginDto = new LoginDto
+        var loginDto = new LoginTerminalDto
         {
             Email = "test@example.com",
             Password = "WrongPassword456!"
         };
 
-        var ex = await Assert.ThrowsAsync<AuthenticationException>(() => service.LoginAsync(loginDto));
+        var ex = await Assert.ThrowsAsync<AuthenticationException>(() => service.LoginTerminalAsync(loginDto));
         Assert.Equal("Invalid credentials", ex.Message);
     }
 

@@ -23,7 +23,7 @@ public class RegisterDto
     public string? Phone { get; set; }
 }
 
-public class LoginDto
+public class LoginTerminalDto
 {
     [Required]
     [EmailAddress]

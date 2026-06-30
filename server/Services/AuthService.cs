@@ -6,13 +6,18 @@ using Server.DTOs;
 public class AuthService
 {
     private readonly AppDbContext _context;
-
     private readonly IPasswordHasher<Restaurant> _hasher;
+    private readonly TerminalJwtService _tokenService;
 
-    public AuthService(AppDbContext context, IPasswordHasher<Restaurant> hasher)
+    public AuthService(
+        AppDbContext context, 
+        IPasswordHasher<Restaurant> hasher, 
+        TerminalJwtService tokenService
+    )
     {
         _context = context;
         _hasher = hasher;
+        _tokenService = tokenService;
     }
 
     public async Task RegisterAsync(RegisterDto data)
@@ -50,7 +55,7 @@ public class AuthService
         }
     }
 
-    public async Task LoginAsync( LoginDto data )
+    public async Task<string> LoginTerminalAsync( LoginTerminalDto data )
     {
         ArgumentNullException.ThrowIfNull(data);
         ArgumentException.ThrowIfNullOrWhiteSpace(data.Email, nameof(data.Email));
@@ -71,5 +76,12 @@ public class AuthService
         {
             throw new AuthenticationException("Invalid credentials");
         }
+
+        return _tokenService.generateToken(
+            new GenerateTokenRequest{ 
+                Id = register.Id,
+                Name = register.Name
+            }
+        );
     }
 }
