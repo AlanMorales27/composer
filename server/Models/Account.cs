@@ -1,6 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 
-public class Restaurant
+/**
+* This model is related to a restaurant account
+*/
+public class Account
 {
     public Guid Id {get; set;}
 

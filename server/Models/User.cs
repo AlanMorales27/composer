@@ -14,9 +14,12 @@ public class User
     public Guid Id {get; set;}
 
     [Required]
-    public Guid RestaurantId {get; set;}
+    public Guid AccountId {get; set;}
 
-    public Restaurant Restaurant {get; set;} = null!;  
+    public Account Account {get; set;} = null!;  
+
+    [Required]
+    public string Code {get; set;} = string.Empty;
 
     [Required]
     [StringLength(50, MinimumLength = 3)]

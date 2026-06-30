@@ -5,9 +5,9 @@ public class Station
     public Guid Id { get; set; }
 
     [Required]
-    public Guid RestaurantId {get; set;}
+    public Guid AccountId {get; set;}
 
-    public Restaurant Restaurant {get; set;} = null!;
+    public Account Account {get; set;} = null!;
     
     [Required]
     [Range(1, int.MaxValue)]
