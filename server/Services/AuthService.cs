@@ -6,12 +6,12 @@ using Server.DTOs;
 public class AuthService
 {
     private readonly AppDbContext _context;
-    private readonly IPasswordHasher<Restaurant> _hasher;
+    private readonly IPasswordHasher<Account> _hasher;
     private readonly TerminalJwtService _tokenService;
 
     public AuthService(
         AppDbContext context, 
-        IPasswordHasher<Restaurant> hasher, 
+        IPasswordHasher<Account> hasher, 
         TerminalJwtService tokenService
     )
     {
@@ -32,7 +32,7 @@ public class AuthService
       
         if(emailExist) throw new InvalidOperationException( "Email already exist. ");
         
-        Restaurant newRegister = new Restaurant
+        Account newRegister = new Account
         {
             Name = data.Name.Trim(),
             Email = data.Email.Trim(),
@@ -61,7 +61,7 @@ public class AuthService
         ArgumentException.ThrowIfNullOrWhiteSpace(data.Email, nameof(data.Email));
         ArgumentException.ThrowIfNullOrWhiteSpace(data.Password, nameof(data.Password));
 
-        Restaurant? register = await _context.Restaurants.FirstOrDefaultAsync(
+        Account? register = await _context.Restaurants.FirstOrDefaultAsync(
             reg => reg.Email == data.Email
         );
 
@@ -83,5 +83,10 @@ public class AuthService
                 Name = register.Name
             }
         );
+    }
+
+    public async Task<string> LoginUserAsync(LoginUserDto dto)
+    {
+        return "";
     }
 }

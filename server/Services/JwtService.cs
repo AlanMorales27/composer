@@ -8,7 +8,6 @@ public record GenerateTokenRequest
 {
     public required Guid Id { get; init; }
     public required string Name { get; init; }
-    public string? Email { get; init; }
     public string? Role { get; init; }
 }
 
@@ -30,7 +29,10 @@ public class TerminalJwtService : IJwtService
     {
         List<Claim> claims = JwtClaims.GetDefault(request.Id);
         claims.AddRange(
-            new List<Claim> { new Claim("terminal", request.Name) }
+            new List<Claim> { 
+                new Claim("terminal", request.Name),
+                new Claim("token_type", "terminal")
+            }
         );
 
         var key = new SymmetricSecurityKey(
@@ -60,7 +62,10 @@ public class UserJwtService : IJwtService
 
     public string generateToken(GenerateTokenRequest request)
     {
+        List<Claim> claims = JwtClaims.GetDefault(request.Id);
+
         return "";
+
     }
 }
 

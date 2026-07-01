@@ -39,8 +39,8 @@ public class StationService
 
     public async Task<Station?> UpdateStationAsync(Guid id, CreateStationDto station)
     {
-        Station? existingStation = await this.GetStationAsync(id);
-
+        Station? existingStation = await GetStationAsync(id);
+        
         if(existingStation is null) return null;
         
         existingStation.Number = station.Number;
@@ -55,7 +55,7 @@ public class StationService
 
     public async Task<bool> DeleteStationAsync(Guid id)
     {
-        Station? station = await this.GetStationAsync(id);
+        Station? station = await GetStationAsync(id);
 
         if(station is null) return false;
 

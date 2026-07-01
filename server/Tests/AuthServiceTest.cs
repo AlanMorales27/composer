@@ -13,9 +13,9 @@ public class AuthServiceTest
     public async Task RegisterAsync_SamePassword_StoredDifferentHashedPasswords()
     {
         int callCount = 0;
-        var hasherMock = new Mock<IPasswordHasher<Restaurant>>();
+        var hasherMock = new Mock<IPasswordHasher<Account>>();
         hasherMock
-            .Setup(h => h.HashPassword(It.IsAny<Restaurant>(), It.IsAny<string>()))
+            .Setup(h => h.HashPassword(It.IsAny<Account>(), It.IsAny<string>()))
             .Returns(() => $"HASHED_PASSWORD_{++callCount}");
 
         var options = new DbContextOptionsBuilder<AppDbContext>()
@@ -57,9 +57,9 @@ public class AuthServiceTest
     [Fact]
     public async Task RegisterAsync_StoredHashedPassword_NotPlainText()
     {
-        var hasherMock = new Mock<IPasswordHasher<Restaurant>>();
+        var hasherMock = new Mock<IPasswordHasher<Account>>();
         hasherMock
-            .Setup(h => h.HashPassword(It.IsAny<Restaurant>(), It.IsAny<string>()))
+            .Setup(h => h.HashPassword(It.IsAny<Account>(), It.IsAny<string>()))
             .Returns("HASHED_PASSWORD");
 
         var options = new DbContextOptionsBuilder<AppDbContext>()
@@ -91,12 +91,12 @@ public class AuthServiceTest
     [Fact]
     public async Task LoginAsync_IncorrectPassword_ThrowsAuthenticationException()
     {
-        var hasherMock = new Mock<IPasswordHasher<Restaurant>>();
+        var hasherMock = new Mock<IPasswordHasher<Account>>();
         hasherMock
-            .Setup(h => h.HashPassword(It.IsAny<Restaurant>(), It.IsAny<string>()))
+            .Setup(h => h.HashPassword(It.IsAny<Account>(), It.IsAny<string>()))
             .Returns("HASHED_PASSWORD");
         hasherMock
-            .Setup(h => h.VerifyHashedPassword(It.IsAny<Restaurant>(), It.IsAny<string>(), It.IsAny<string>()))
+            .Setup(h => h.VerifyHashedPassword(It.IsAny<Account>(), It.IsAny<string>(), It.IsAny<string>()))
             .Returns(PasswordVerificationResult.Failed);
 
         var options = new DbContextOptionsBuilder<AppDbContext>()
