@@ -45,6 +45,15 @@ public class ExceptionHandlingMiddleware
                 "The operation could not be completed due to a database error."
             );
         }
+        catch (UnauthorizedAccessException)
+        {
+            await WriteProblemAsync(
+                context,
+                StatusCodes.Status401Unauthorized,
+                "Unauthorized",
+                "You are not authorized to perform this action."
+            );
+        }
         catch (Exception)
         {
             await WriteProblemAsync(

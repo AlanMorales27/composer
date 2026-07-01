@@ -12,7 +12,6 @@ public class StationService
     
     public async Task<List<Station>> GetStationsAsync()
     {
-
         return await _context.Stations.ToListAsync();
     }
 
@@ -40,7 +39,7 @@ public class StationService
     public async Task<Station?> UpdateStationAsync(Guid id, CreateStationDto station)
     {
         Station? existingStation = await GetStationAsync(id);
-        
+
         if(existingStation is null) return null;
         
         existingStation.Number = station.Number;

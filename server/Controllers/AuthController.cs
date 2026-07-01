@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Server.DTOs;
 
@@ -15,8 +16,6 @@ public class AuthController : ControllerBase
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterDto data)
     {
-        if (!ModelState.IsValid) return ValidationProblem(ModelState);
-
         await _service.RegisterAsync(data);
 
         return Ok(new { message = "Registration completed successfully." });
@@ -25,18 +24,15 @@ public class AuthController : ControllerBase
     [HttpPost("login/terminal")]
     public async Task<ActionResult<string>> LoginTerminal([FromBody] LoginTerminalDto dto)
     {
-        if (!ModelState.IsValid) return ValidationProblem(ModelState);
-
         string token = await _service.LoginTerminalAsync(dto);
 
         return Ok(token);
     }
 
     [HttpPost("login/user")]
+    [Authorize(Policy = "TerminalToken")]
     public async Task<ActionResult<string>> LoginUser([FromBody] LoginUserDto dto)
     {
-        if(!ModelState.IsValid) return ValidationProblem(ModelState);
-
         string token = await _service.LoginUserAsync(dto);
 
         return Ok(token);

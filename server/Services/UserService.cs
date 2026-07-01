@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 public class UserService
 {
@@ -9,6 +10,16 @@ public class UserService
     {
         _context = context;
         _hasher = hasher;
+    }
+
+    public async Task<List<User>> GetUsersAsync()
+    {
+        return await _context.Users.ToListAsync();
+    }
+
+    public async Task<User?> GetUserAsync(Guid id)
+    {
+        return await _context.Users.FindAsync(id);
     }
 
     /*
@@ -31,8 +42,9 @@ public class UserService
         };
 
         newUser.Code = _hasher.HashPassword(newUser, dto.Code);
-        
-        await _context.Users.AddAsync(newUser);
+
+        _context.Users.Add(newUser);
+        await _context.SaveChangesAsync();
 
         return newUser;
     }

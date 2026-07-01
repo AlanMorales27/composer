@@ -7,13 +7,13 @@ using Server.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 
 builder.Services.AddScoped<StationService>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<TerminalJwtService>();
 builder.Services.AddScoped<UserJwtService>();
+builder.Services.AddScoped<UserService>();
 
 // This could be change by BCryptPasswordHashear implementing the same interface 
 builder.Services.AddScoped<
@@ -29,6 +29,7 @@ builder.Services.AddScoped<
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
+        options.MapInboundClaims = false;
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,
@@ -45,7 +46,7 @@ builder.Services.AddAuthorization( options =>
 {
     options.AddPolicy(
         "TerminalToken", 
-        policy => policy.RequireClaim("token_type", "termina;")
+        policy => policy.RequireClaim("token_type", "terminal")
     );
 }
 );
